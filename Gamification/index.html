@@ -114,6 +114,22 @@
             border: 2px dashed var(--primary);
             margin: 20px 0;
         }
+
+        /* Add this to the end of your <style> block */
+
+        #poster-preview {
+            width: 60%;
+            /* Adjust size as needed for mobile */
+            max-width: 200px;
+            /* Prevents it from being too big on desktops */
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            /* Pushes the title down */
+            border: 3px solid white;
+            /* Adds a nice "sticker" border */
+        }
     </style>
 </head>
 
@@ -123,6 +139,8 @@
         <div id="score-badge">Score: <span id="score">0</span> / 10</div>
 
         <div id="start-screen" class="overlay">
+            <img src="ZENBOWL POSTER.png" id="poster-preview" alt="ZenBowl Poster Preview">
+
             <h1>ZenBowl Catch 🥗</h1>
             <p>Catch the falling proteins to fuel your day and unlock a special reward!</p>
             <button class="btn" onclick="startGame()">Start Game</button>
@@ -160,8 +178,8 @@
         let gameRunning = false;
         let bowl = { x: 185, y: canvas.height - 100, w: 80, h: 45 };
         let items = [];
-        const proteins = ['🍗', '🥚', '🍤', '🥜','🫘', '🥦', '🥑', '🍄', '🌱'];
-       
+        const proteins = ['🍗', '🥚', '🍤', '🥜', '🫘', '🥦', '🥑', '🍄', '🌱'];
+
 
         function startGame() {
             document.getElementById('start-screen').style.display = 'none';
@@ -188,44 +206,44 @@
             // Draw Bowl with rounded corners
             ctx.fillStyle = '#e67e22';
             // Replace the old bowl drawing section in the draw() function with this:
-function drawBowl(x, y, w, h) {
-    ctx.save();
-    
-    // Create a subtle gradient for depth
-    let gradient = ctx.createLinearGradient(x, y, x, y + h);
-    gradient.addColorStop(0, '#e67e22'); // Top (Light Zen Orange)
-    gradient.addColorStop(1, '#d35400'); // Bottom (Darker Orange)
-    
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    
-    // The top flat edge
-    ctx.moveTo(x, y);
-    ctx.lineTo(x + w, y);
-    
-    // The curved bottom (the bowl shape)
-    // We use a quadratic curve to make it look like a half-circle/bowl
-    ctx.quadraticCurveTo(x + w, y + h, x + w / 2, y + h);
-    ctx.quadraticCurveTo(x, y + h, x, y);
-    
-    ctx.closePath();
-    ctx.fill();
+            function drawBowl(x, y, w, h) {
+                ctx.save();
 
-    // Add a "rim" to the bowl for a premium look
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(x - 2, y);
-    ctx.lineTo(x + w + 2, y);
-    ctx.stroke();
+                // Create a subtle gradient for depth
+                let gradient = ctx.createLinearGradient(x, y, x, y + h);
+                gradient.addColorStop(0, '#e67e22'); // Top (Light Zen Orange)
+                gradient.addColorStop(1, '#d35400'); // Bottom (Darker Orange)
 
-    ctx.restore();
-}
+                ctx.fillStyle = gradient;
+                ctx.beginPath();
 
-// Inside your draw() function, replace:
-// roundRect(ctx, bowl.x, bowl.y, bowl.w, bowl.h, 10, true);
-// WITH:
-drawBowl(bowl.x, bowl.y, bowl.w, bowl.h);
+                // The top flat edge
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + w, y);
+
+                // The curved bottom (the bowl shape)
+                // We use a quadratic curve to make it look like a half-circle/bowl
+                ctx.quadraticCurveTo(x + w, y + h, x + w / 2, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y);
+
+                ctx.closePath();
+                ctx.fill();
+
+                // Add a "rim" to the bowl for a premium look
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(x - 2, y);
+                ctx.lineTo(x + w + 2, y);
+                ctx.stroke();
+
+                ctx.restore();
+            }
+
+            // Inside your draw() function, replace:
+            // roundRect(ctx, bowl.x, bowl.y, bowl.w, bowl.h, 10, true);
+            // WITH:
+            drawBowl(bowl.x, bowl.y, bowl.w, bowl.h);
 
             items.forEach((item, index) => {
                 item.y += item.speed;
